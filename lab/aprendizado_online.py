@@ -44,7 +44,10 @@ def z(v):
     r = np.argsort(np.argsort(v + 1e-9 * np.random.default_rng(0).random(100)))
     return (r - 49.5) / 28.9
 
-def top50(s): return np.argsort(-s, kind="stable")[:50]
+def top50(s):
+    """Top-50 com desempate ALEATÓRIO (semente derivada do próprio vetor). Desempate por índice criaria um viés 00–49."""
+    jit = np.random.default_rng(int(abs(np.asarray(s, float)).sum() * 1e3) % (2**32)).random(100)
+    return np.lexsort((jit, -np.asarray(s, float)))[:50]
 
 def main():
     M = carregar_historico()["D"]; cs = None; N = len(M)

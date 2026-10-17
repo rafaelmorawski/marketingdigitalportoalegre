@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Teste forward pré-registrado das 4 lentes que subiram nos últimos 100 sorteios (hipótese pós-hoc: só vale com dados novos).
+"""Teste forward pré-registrado da lente coluna±10 (hipótese pós-hoc: só vale com dados novos).
   python3 lab/lentes_forward.py prever 2989      -> grava os 4 bilhetes top-50 ANTES do sorteio em data/lentes_previsoes.json
   python3 lab/lentes_forward.py conferir 2989 "<20 dezenas>"  -> confere e acumula em data/lentes_forward.csv
 Regra de decisão (fixada agora): após 100 sorteios novos, uma lente só conta se z >= 2,91 (Bonferroni, 14 lentes) E replicar na
@@ -9,7 +9,7 @@ import numpy as np
 from dados import carregar_historico
 from aprendizado_online import scores, top50, LENTES
 
-ESCOLHIDAS = ["freq50", "pendente_ciclo", "repetida", "coluna±10"]
+ESCOLHIDAS = ["coluna±10"]   # única hipótese que sobreviveu à correção do desempate (ver relatorios/AUTOPSIA_100_e_prereg_lentes.md)
 PREV, LOG = "data/lentes_previsoes.json", "data/lentes_forward.csv"
 
 def prever(conc):
