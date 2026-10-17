@@ -2,7 +2,7 @@
 
 ✅ respondida · 🟡 parcial · ⚪ aberta · ★ prioridade alta entre as abertas
 
-**Total 100: 41 respondidas, 17 parciais, 42 abertas (19 de prioridade alta).**
+**Total 100: 44 respondidas, 17 parciais, 39 abertas (17 de prioridade alta).**
 
 ## 1. O globo é uniforme? (integridade)
 
@@ -83,8 +83,8 @@
 | 53 | Qual o teto teórico de E[max] com 10 jogos? | ⚪★ |  |
 | 54 | Qual o mínimo de acertos garantido do melhor jogo com N jogos (covering design)? | ✅ | K10/R10 garantem ≥10; J ≥9; aleatório 6–7; garantir 15+ exige ≥88 jogos |
 | 55 | Qual a sobreposição ótima entre jogos por objetivo (≥15, ≥17, ≥19)? | 🟡 | ≈25–28 |
-| 56 | Quanto sobe P(≥15) por jogo adicional (retorno decrescente)? | ⚪★ |  |
-| 57 | Qual o nº de jogos de melhor razão benefício/custo? | ⚪★ |  |
+| 56 | Quanto sobe P(≥15) por jogo adicional (retorno decrescente)? | ✅ | ≈1,1 pp por jogo até 10; 0,8 pp aos 40 |
+| 57 | Qual o nº de jogos de melhor razão benefício/custo? | ✅ | sem joelho: cada jogo vale ~1 pp de P(≥15); o ganho da otimização cresce com N |
 | 58 | O espelho (complemento) de um jogo ajuda para 0 e 20 acertos? | ✅ | 0 de T = 20 do espelho; um jogo já paga nos dois; espelho só soma 2ª chance independente |
 | 59 | Os 24 jogos atuais têm redundância desperdiçada? | 🟡 | auditoria |
 | 60 | Hill-climbing sobre o histórico generaliza? | ✅ | não (82% some) |
@@ -129,9 +129,9 @@
 | 89 | Quantos sorteios para distinguir dois grupos de jogos? | ✅ | ≈170 |
 | 90 | O ledger por grupo já distingue algo? | ⚪ | n pequeno |
 | 91 | O robô reproduz os números de referência após cada mudança (teste de regressão)? | ⚪★ |  |
-| 92 | Há divergências entre a planilha e a API (correções, duplicatas, datas)? | 🟡 | 2.987/2.987 iguais |
-| 93 | As conclusões mudam com a semente ou com o tamanho dos bancos? | 🟡 |  |
-| 94 | Que fração dos 'achados' o nosso auditor derruba? | ⚪ |  |
+| 92 | Os 20 números já se repetiram, e isso informa algo? | ✅ | nunca repetiu (esperado: 8e-15); quase-repetidos no ritmo do acaso |
+| 93 | Há divergências entre a planilha e a API (correções, duplicatas, datas)? | 🟡 | 2.987/2.987 iguais |
+| 94 | As conclusões mudam com a semente ou com o tamanho dos bancos? | 🟡 |  |
 | 95 | Qual critério para encerrar a busca por sinal se tudo continuar nulo? | ⚪★ | decisão |
 | 96 | Qual orçamento você aceita perder, e que meta além do prêmio máximo faria sentido? | ⚪★ | decisão sua |
 | 97 | Quais perguntas ainda não pensamos? (revisão periódica por mim e pelo auditor) | ⚪ |  |
