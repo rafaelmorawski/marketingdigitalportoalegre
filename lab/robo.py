@@ -63,6 +63,8 @@ def processar(n, data, dez, dry):
     painel = rodar([sys.executable, "lab/painel_predicao.py", "--csv", "data/Lotomania.csv",
                     "--extras-file", "data/extras.csv", "--log", "data/painel_log.csv"])
     out += ["", "## Painel de predição", "\n".join(painel.splitlines()[-5:])]
+    rodar([sys.executable, "lab/semaforo.py"])
+    out += ["", "## Semáforos", f"Painel atualizado em relatorios/SEMAFORO_C{n}.md (nenhuma hipótese do painel está confirmada)."]
     out += ["", "## Pré-registro do próximo concurso", rodar([sys.executable, "lab/lentes_forward.py", "prever", str(n + 1)])]
     out += ["", "Nada aqui prevê o sorteio; ver seção 10 do CLAUDE.md."]
     rel = caminho("relatorios", f"ROBO_C{n}.md"); open(rel, "w", encoding="utf-8").write("\n".join(out) + "\n")
