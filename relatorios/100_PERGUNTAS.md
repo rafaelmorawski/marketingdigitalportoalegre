@@ -2,7 +2,7 @@
 
 ✅ respondida · 🟡 parcial · ⚪ aberta · ★ prioridade alta entre as abertas
 
-**Total 100: 39 respondidas, 17 parciais, 44 abertas (19 de prioridade alta).**
+**Total 100: 41 respondidas, 17 parciais, 42 abertas (19 de prioridade alta).**
 
 ## 1. O globo é uniforme? (integridade)
 
@@ -85,7 +85,7 @@
 | 55 | Qual a sobreposição ótima entre jogos por objetivo (≥15, ≥17, ≥19)? | 🟡 | ≈25–28 |
 | 56 | Quanto sobe P(≥15) por jogo adicional (retorno decrescente)? | ⚪★ |  |
 | 57 | Qual o nº de jogos de melhor razão benefício/custo? | ⚪★ |  |
-| 58 | O espelho (complemento) de um jogo ajuda para 0 e 20 acertos? | 🟡 | mesma probabilidade |
+| 58 | O espelho (complemento) de um jogo ajuda para 0 e 20 acertos? | ✅ | 0 de T = 20 do espelho; um jogo já paga nos dois; espelho só soma 2ª chance independente |
 | 59 | Os 24 jogos atuais têm redundância desperdiçada? | 🟡 | auditoria |
 | 60 | Hill-climbing sobre o histórico generaliza? | ✅ | não (82% some) |
 | 61 | Hill-climbing sobre simulados melhora com mais amostra? | 🟡 | sim, até ~+0,17 |
@@ -94,7 +94,7 @@
 | 64 | Relógio com apoio otimizado vs jogo livre? | ✅ | igual (+0,166 vs +0,170) |
 | 65 | Construção sequencial vs conjunta? | ✅ | conjunta é melhor |
 | 66 | Estruturas matemáticas (códigos, designs, espaços finitos F₂⁷) cobrem melhor que hill-climbing? | ⚪★ | matemática avançada |
-| 67 | Qual a melhor cobertura para o prêmio de 0 acertos? | ⚪ |  |
+| 67 | Qual a melhor cobertura para o prêmio de 0 acertos? | ✅ | a mesma: conjuntos de 50 e espelhos; colisão ≈1e-9; vale R$ 0,0115 por bilhete |
 | 68 | Qual construtor maximiza a cauda (≥17)? | ⚪ |  |
 | 69 | Quanto E[max] compra cada R$ 3 extras? | ⚪ |  |
 | 70 | A grade de 24 jogos está perto do teto de 19+? | 🟡 | a 0,00077% do teto |
@@ -107,7 +107,7 @@
 | 72 | A partir de qual acumulado o retorno iguala o preço? | ✅ | ≈R$ 30 mi, nunca visto |
 | 73 | Qual a chance de ganhar qualquer prêmio por concurso com 24 jogos? | ⚪★ |  |
 | 74 | Prêmio esperado e variância por faixa (15–19 e 0)? | 🟡 |  |
-| 75 | Quantos co-ganhadores esperar no 20 acertos? | ⚪ |  |
+| 75 | Quantos co-ganhadores esperar no 20 acertos? | 🟡 | 0,15 por concurso (20) e 0,17 (0); jackpot dividido quando há |
 | 76 | Bilhetes impopulares valem quanto? | ✅ | ≈R$ 0,05/concurso |
 | 77 | Probabilidade de perder X reais em N concursos (risco de ruína)? | ⚪★ | decisão de orçamento |
 | 78 | Quantos concursos até 50% de chance de ver um 19+ com 24 jogos? | ⚪★ | ≈10.000 |
