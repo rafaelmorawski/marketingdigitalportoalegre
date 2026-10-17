@@ -5,7 +5,11 @@ Pacote para levar ao Claude Code: histórico, os 24 jogos do C2988 com a razão 
 ## Instalação
     pip install -r requirements.txt
 
-## Quando sair o resultado de um concurso
+## Quando sair o resultado de um concurso (automático)
+    python3 lab/robo.py      # busca na API da Caixa e roda o fluxo todo
+    python3 -m unittest discover -s tests    # testes de regressão
+
+## Manual
     python3 lab/conferir.py --concurso 2988 --dezenas "<20 dezenas>" --data 17/10/2026
     python3 lab/painel_predicao.py --csv data/Lotomania.csv --extras-file data/extras.csv --log data/painel_log.csv
 

@@ -69,7 +69,7 @@ J (espiral, 10), F (cobertura da falha, 5), U1 (impopular), E1 (edge das três l
 
 **Decisões dele a respeitar:** quer acompanhar **cada grupo separado** a cada resultado; quer manter os J fixos; gosta da lógica da espiral; quer que se pense em "construções com uma razão de existir". Ele aceita que "só a sorte ganha".
 
-**Pendências:** (1) conferir o C2988 e os seguintes (grupo a grupo) e atualizar ledger e ciclo; (2) rodar o painel de predição a cada resultado; (3) testar a previsão de popularidade quando a planilha de ganhadores estiver completa; (4) acompanhar o acumulado (só vale ajustar gasto quando o retorno esperado se aproximar do preço).
+**Pendências (atualizado em 17/10/2026):** (1) quando sair o C2989 (19/10), rodar `python3 lab/robo.py` (confere por grupo, ledger, painel, semáforos e lente pré-registrada coluna±10); (2) fechar a grade do C2989 com orçamento e grupos definidos pelo Rafael (J fixo; candidatos K10, R10, J+5 em `data/`); (3) acompanhar a lente coluna±10 em dados novos (efeito ~0,25 pp, só confirmável com milhares de sorteios); (4) acompanhar o acumulado (retorno esperado ≈ 62% do preço a R$ 14 mi); (5) perguntas abertas em `relatorios/100_PERGUNTAS.md`.
 
 ---
 
@@ -102,21 +102,35 @@ Se a planilha da Caixa for atualizada (`data/Lotomania.csv`), os concursos que j
 ## 8. ESTRUTURA DO REPOSITÓRIO
 
 ```
-CLAUDE.md                 este arquivo
-README.md                 uso rápido
-requirements.txt          numpy, scipy, scikit-learn
+CLAUDE.md                  este arquivo (memória do projeto)
+README.md                  uso rápido
+requirements.txt           numpy, scipy, scikit-learn
+.claude/agents/            auditor-estatistico, cacador-de-hipoteses, construtor-de-grades
+.claude/skills/            novo-resultado, pre-registro, auditar-hipotese, construir-grade, risco-orcamento, validar-dados
+.github/workflows/         testes.yml (testes de regressão a cada push)
+tests/                     test_referencia.py (números de referência, integridade dos dados, piso garantido)
 data/
-  Lotomania.csv           planilha da Caixa até o C2986 (colunas: Concurso, Data Sorteio, Bola1..Bola20, ganhadores e rateios)
-  extras.csv              sorteios depois do fim da planilha (concurso,data,dezenas) — já tem o C2987
-  jogos_C2988.json        os 24 jogos, grupos e razões
-  ledger_grupos.csv       melhor e média por grupo e concurso (semeado com o C2987)
-docs/                     biblioteca A–I (I = mais recente)
+  Lotomania.csv            planilha da Caixa até o C2987 (latin-1; com ganhadores e rateios)
+  historico.csv            C1–C2988 baixado da API (conferência independente; bate 2.987/2.987)
+  historico_ordem.csv      ORDEM de saída das bolas, C1–C2988
+  extras.csv               sorteios depois do fim da planilha (já tem C2987 e C2988)
+  jogos_C2988.json         os 24 jogos apostados, com grupos e razões
+  jogos_C2989_K10.json     K10: hill-climbing de cobertura em simulados (piso garantido 10)
+  jogos_C2989_R10.json     R10: relógio do Rafael com apoio otimizado
+  jogos_J_mais5.json       J fixo + 5 jogos novos complementares
+  ledger_grupos.csv        melhor e média por grupo e concurso
+  painel_log.csv, lentes_previsoes.json, lentes_forward.csv, semaforo_estado.json
+docs/                      biblioteca A–I (I = mais recente)
 lab/
-  dados.py                carga do histórico e estado do ciclo
-  ferramentas.py          simulação uniforme, avaliação de grade, comparação com aleatórios, chances exatas, auditoria
-  conferir.py             conferência por grupo + ledger + relatório
-  painel_predicao.py      teste de predição fora da amostra (boosting, logística, controle)
-relatorios/               relatórios de conferência por concurso
+  dados.py, ferramentas.py, conferir.py, painel_predicao.py       (pacote original)
+  robo.py                  fluxo completo ao sair resultado (API → conferência → painel → semáforos → pré-registro)
+  construtor.py            construtor geral (fixos + N novos, 3 bancos, controle, piso, 20-ou-0)
+  relogio.py, grupo_k10.py, sequencial.py, curva_tamanho.py       (estudos de construção)
+  garantia.py, poder.py, zero_acertos.py, risco.py                (garantia mínima, poder estatístico, prêmio de 0, risco)
+  bateria_historico.py, bateria_ordem.py, macro_micro.py, semaforo.py, aprendizado_online.py, walkforward_adaptativo.py, lentes_forward.py,
+  repeticoes.py, repetidas.py, repetidas_janela.py, hc_historico_vs_sintetico.py        (testes pré-registrados)
+  validar_dados.py, ler_xlsx.py, baixar.py, baixar_ordem.py, perguntas.py       (dados e utilitários)
+relatorios/                conferência por concurso, PREREG_*.md, 100_PERGUNTAS.md, SEMAFORO_C*.md e resultados
 ```
 
 Antes de alterar scripts: rode-os, confira que reproduzem os números de referência (painel: AUC 0,4992 / 0,4988 / controle 0,4986; conferência do C2987: grupo J melhor 14, média 9,90).
@@ -138,3 +152,28 @@ Antes de alterar scripts: rode-os, confira que reproduzem os números de referê
 ## 10. RESSALVA FINAL
 
 Tudo que este projeto mostra de "ganho" é **cobertura em sorteios simulados uniformes** e **estatística descritiva do histórico**. Nada prevê o próximo sorteio. A chance de 20 acertos permanece 1 em 11.372.636 por bilhete. O valor do projeto é reduzir erros de construção, medir honestamente, registrar o que foi testado e não se convencer de padrão onde só existe acaso.
+
+---
+
+## 11. APRENDIZADOS DE 17/10/2026 (todos com relatório em `relatorios/`)
+
+**Tudo nulo no globo** (nenhum passa Bonferroni): 24 estatísticas do histórico, 15 testes da ordem de saída das bolas, 13 testes macro×micro (quentes/mornas/frias por janelas de 5–100, persistência, sobredispersão, ciclo por fase), 90 testes do painel de semáforos (26 indicadores + tempo de ocorrência), aprendiz online sobre 14 lentes. Repetidas do anterior: média 4,01 (esperado 4,00); o "8 a 9" vem da união de 2–3 sorteios (7,2–9,8 por aritmética), não do anterior. Nunca terem repetido as 20 dezenas era o esperado (8e-15).
+
+**Construção (cobertura, nunca previsão):** teto de ganho ≈ +0,17 a +0,2 em E[max] sobre aleatórios (K10 13,23 vs 13,06; J 13,18). O relógio do Rafael com apoio otimizado iguala o K10 livre; a regra "apoio nunca repete o núcleo anterior" é neutra; paridade e restrições (repetidas, pendentes) custam zero e ganham zero. Hill-climbing no histórico real sobreajusta (82% do ganho some fora da amostra); em simulados o ganho é cobertura. Construção sequencial ("jogo k após falha dos anteriores") é pior que a conjunta: as 10 apostas são feitas antes do sorteio. Ganho da otimização cresce com N (P(≥15): +0,28 pp com 10 jogos, +0,98 pp com 24, +1,56 pp com 40). Cada jogo extra vale ≈ 1 pp de P(≥15), sem joelho.
+
+**Zero acertos:** 0 de T = 20 do espelho de T; chance 1 em 11.372.636. Um grupo de N jogos tem 2N chances (20 ou 0): K10 1 em 568.632. O zero rende R$ 0,0115 por bilhete (prêmio médio R$ 131 mil); o nº de ganhadores de 0 não é previsível pela estrutura do sorteio.
+
+**Garantia:** K10 e R10 garantem ≥10 acertos no pior sorteio (J ≥9; aleatórios 6–7). Garantir 15+ exige ≥88 jogos; 19+ ≥341.952; 20 ≥11,4 mi. Garantir 10 não paga prêmio.
+
+**Poder estatístico:** os detectores pegam viés ≥1,9 pp (dezenas fixas), ≥0,85 pp (repetição) e ≥0,4 pp (coluna) quase sempre; o que passa despercebido vale ≤ +0,05 acerto por bilhete. Falsos positivos nominais (2,5–4% a p<0,05). A lente coluna±10 (20,25% vs 20,00%) é inconclusiva e está pré-registrada.
+
+**Economia:** retorno esperado a R$ 14 mi ≈ R$ 1,85 por bilhete (62% do preço; supõe ganhador único); 24 jogos por 52 concursos: mediana de perda ≈ R$ 3.442 de R$ 3.744, P(lucro) 0,5% (`lab/risco.py`). O modelo de popularidade ordena (corr. +0,25 a +0,41 nas faixas 15–18) mas não calibra (R² ≤ 0).
+
+**Erros nossos que viraram regra (obrigatório):**
+1. **Desempate de ranking NUNCA por número da dezena** (cria viés 00–49 e fabricou z ≈ +2 em lentes binárias). Use desempate aleatório.
+2. Estatística com `nan` no nulo dá p falso; usar `nanmean` e conferir o nulo antes de ler o p.
+3. Hipótese nascida nos dados de teste é pós-hoc: só vale em dados novos (ou na reserva virgem C1–C1000).
+4. Z isolado entre dezenas de testes é esperado; contar TODOS os testes do projeto no Bonferroni.
+5. Endpoint "último resultado" da Caixa atrasa: consultar o concurso pelo número. Planilha xlsx da Caixa traz células inválidas ('-'): usar `lab/ler_xlsx.py`.
+
+**Como trabalhar com as ferramentas:** ao sair resultado → skill `novo-resultado` (`lab/robo.py`); grade nova → skill `construir-grade` (`lab/construtor.py`); antes de afirmar padrão → agente `auditor-estatistico`; ideia nova do Rafael → `cacador-de-hipoteses` + skill `pre-registro`; antes de fechar uma aposta → skill `risco-orcamento`; dado novo → skill `validar-dados`. Rodar `python3 -m unittest discover -s tests` antes de commitar (o GitHub roda o mesmo a cada push).
