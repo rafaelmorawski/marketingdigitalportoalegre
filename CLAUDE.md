@@ -106,9 +106,10 @@ CLAUDE.md                  este arquivo (memória do projeto)
 README.md                  uso rápido
 requirements.txt           numpy, scipy, scikit-learn
 .claude/agents/            auditor-estatistico, cacador-de-hipoteses, construtor-de-grades
-.claude/skills/            novo-resultado, pre-registro, auditar-hipotese, construir-grade, risco-orcamento, validar-dados
+.claude/skills/            novo-resultado, pre-registro, auditar-hipotese, construir-grade, risco-orcamento, validar-dados, formalizar-lean
 .github/workflows/         testes.yml (testes de regressão a cada push)
-tests/                     test_referencia.py (números de referência, integridade dos dados, piso garantido)
+tests/                     test_referencia.py (números de referência, integridade dos dados, piso garantido, compilação das provas Lean)
+lean/                      Lotomania.lean: provas verificadas em Lean 4 (espelho soma 20 e garante ≥10; 0 de T ⇔ 20 do espelho; 1 em 11.372.636 = arredondamento de 11.372.635,89…; garantir 15+ ≥88 jogos, 19+ ≥341.952)
 data/
   Lotomania.csv            planilha da Caixa até o C2987 (latin-1; com ganhadores e rateios)
   historico.csv            C1–C2988 baixado da API (conferência independente; bate 2.987/2.987)
@@ -176,4 +177,4 @@ Tudo que este projeto mostra de "ganho" é **cobertura em sorteios simulados uni
 4. Z isolado entre dezenas de testes é esperado; contar TODOS os testes do projeto no Bonferroni.
 5. Endpoint "último resultado" da Caixa atrasa: consultar o concurso pelo número. Planilha xlsx da Caixa traz células inválidas ('-'): usar `lab/ler_xlsx.py`.
 
-**Como trabalhar com as ferramentas:** ao sair resultado → skill `novo-resultado` (`lab/robo.py`); grade nova → skill `construir-grade` (`lab/construtor.py`); antes de afirmar padrão → agente `auditor-estatistico`; ideia nova do Rafael → `cacador-de-hipoteses` + skill `pre-registro`; antes de fechar uma aposta → skill `risco-orcamento`; dado novo → skill `validar-dados`. Rodar `python3 -m unittest discover -s tests` antes de commitar (o GitHub roda o mesmo a cada push).
+**Como trabalhar com as ferramentas:** ao sair resultado → skill `novo-resultado` (`lab/robo.py`); grade nova → skill `construir-grade` (`lab/construtor.py`); antes de afirmar padrão → agente `auditor-estatistico`; ideia nova do Rafael → `cacador-de-hipoteses` + skill `pre-registro`; antes de fechar uma aposta → skill `risco-orcamento`; dado novo → skill `validar-dados`; afirmação matemática exata → skill `formalizar-lean` (só vale "provado" com `lean` saindo 0 e sem `sorry`). Rodar `python3 -m unittest discover -s tests` antes de commitar (o GitHub roda o mesmo a cada push).

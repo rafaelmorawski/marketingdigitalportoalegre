@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """Testes de regressão: os números de referência do laboratório precisam continuar reproduzindo. Sem rede, sem dependências pesadas.
 Rodar: python3 -m unittest discover -s tests -v"""
-import glob, json, os, sys, unittest
+import glob, json, os, shutil, subprocess, sys, unittest
 import numpy as np
 RAIZ = os.path.dirname(os.path.dirname(os.path.abspath(__file__))); sys.path.insert(0, os.path.join(RAIZ, "lab"))
 from math import comb
@@ -29,6 +29,13 @@ class Dados(unittest.TestCase):
 
     def test_c2988(self):
         h = carregar_historico(); self.assertEqual(h["dezenas"][h["concursos"].index(2988)], [4, 8, 13, 17, 21, 23, 28, 29, 30, 47, 70, 75, 78, 79, 80, 85, 89, 92, 95, 97])
+
+class ProvasLean(unittest.TestCase):
+    @unittest.skipUnless(shutil.which("lean") or os.path.exists(os.path.expanduser("~/.elan/bin/lean")), "Lean não instalado")
+    def test_provas_compilam(self):
+        lean = shutil.which("lean") or os.path.expanduser("~/.elan/bin/lean")
+        r = subprocess.run([lean, os.path.join(RAIZ, "lean", "Lotomania.lean")], capture_output=True, text=True, timeout=300)
+        self.assertEqual(r.returncode, 0, r.stdout + r.stderr); self.assertNotIn("sorry", r.stdout + r.stderr)
 
 class Jogos(unittest.TestCase):
     def test_arquivos_de_jogos_validos(self):
