@@ -1,0 +1,123 @@
+# -*- coding: utf-8 -*-
+"""As 100 perguntas do laboratório, com status. Atualize o status aqui e rode: python3 lab/perguntas.py"""
+import os
+RAIZ = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+B = [
+("1. O globo é uniforme? (integridade)", [
+ ("Cada uma das 100 dezenas sai com 20%?", "✅", "sim, χ² uniforme"),
+ ("O nº de acertos de bilhetes quaisquer segue a hipergeométrica nos 2.988 sorteios?", "✅", "média 10,00, dp 2,01"),
+ ("Houve quebra de regime (troca de globo, método ou regra) em algum ponto de C1–C2988?", "🟡", "deriva testada; quebra pontual aberta"),
+ ("Alguma dezena específica tem viés em janelas longas (500 sorteios)?", "⚪", ""),
+ ("A ordem de saída das bolas tem padrão?", "✅", "não (15 testes)"),
+ ("Dia da semana, local ou horário mudam algo?", "🟡", "dia da semana: não; local e horário abertos"),
+ ("Concursos especiais diferem dos comuns?", "⚪", ""),
+ ("Depois de concursos acumulados o sorteio muda?", "⚪", ""),
+ ("O volume de apostas (arrecadação) se relaciona com algo do sorteio? (não deveria)", "⚪", ""),
+ ("Qual a menor distorção que nossos testes conseguiriam detectar (poder estatístico)?", "⚪★", "pergunta-chave de honestidade")]),
+("2. Memória temporal", [
+ ("O sorteio t depende de t−1 … t−10?", "✅", "não"),
+ ("Existe dependência em lags longos (50, 100, 52 semanas)?", "⚪", ""),
+ ("Dezenas quentes e frias persistem?", "✅", "não (janelas 5–100)"),
+ ("As pendentes do ciclo saem mais?", "✅", "19,93% vs 20,00%"),
+ ("As repetidas do anterior passam de 4 por sorteio?", "✅", "não (20,07%)"),
+ ("O tempo de espera de cada dezena é geométrico?", "⚪", ""),
+ ("Dezena atrasada volta mais (hazard por dezena)?", "🟡", "por evento: não; por dezena aberto"),
+ ("Há periodicidade (FFT) na soma ou nas contagens?", "✅", "não"),
+ ("Há sobredispersão em blocos de sorteios?", "✅", "1,00 (binomial)"),
+ ("A duração do ciclo bate com o esperado (24,4 vs 24,0)?", "✅", "sim"),
+ ("Existe memória de segunda ordem (t depende de t−1 e t−2 juntos)?", "⚪", ""),
+ ("Pares de dezenas saem juntos além do acaso?", "⚪★", "co-ocorrência 100×100"),
+ ("Pares de dezenas se repelem?", "⚪★", ""),
+ ("Existem grupos (comunidades) de dezenas afins?", "⚪★", "")]),
+("3. Formas do sorteio", [
+ ("A soma das 20 dezenas tem distribuição esperada e tendência?", "✅", "sim, sem tendência"),
+ ("Pares × ímpares: muda a quantidade ou repete?", "✅", "χ² p=0,85; sem memória"),
+ ("Acima × abaixo de 50?", "✅", "uniforme"),
+ ("Décadas vazias: frequência e tempo para ocorrer?", "✅", "sem memória"),
+ ("Sequências de números consecutivos?", "✅", "sem desvio"),
+ ("Agrupamento ou repulsão no volante (vizinhas)?", "✅", "sem desvio"),
+ ("Borda × centro do volante?", "✅", "sem desvio"),
+ ("Simetria: pares de espelho (d e 99−d) dentro do mesmo sorteio?", "⚪", ""),
+ ("Quadrantes e diagonais?", "✅", "sem desvio"),
+ ("Formas geométricas (linha cheia, cruz, L)?", "⚪", ""),
+ ("Distribuição conjunta de dois indicadores (soma × pares)?", "⚪★", "combinações"),
+ ("Terminações (colunas) repetidas ou ausentes?", "✅", "sem desvio"),
+ ("Primos, múltiplos de 3 e de 5?", "✅", "sem desvio"),
+ ("Quantas dezenas em comum entre sorteios consecutivos?", "✅", "média 4,0"),
+ ("Deslocamento médio do sorteio t−1 para t no volante?", "⚪", ""),
+ ("A forma do sorteio muda com a posição no ciclo?", "🟡", "ciclo por fase: p=0,33")]),
+("4. Predição", [
+ ("ML forte (boosting, logística) consegue AUC > 0,5?", "✅", "não (0,4955–0,5020)"),
+ ("Um aprendiz online sobre muitas lentes acerta mais?", "✅", "não"),
+ ("A lente coluna±10 se confirma com dados novos?", "🟡", "pré-registrada, em acompanhamento"),
+ ("Um ensemble dos melhores modelos melhora?", "⚪", "esperado: não"),
+ ("Modelos sequenciais (LSTM, transformer) acham algo que o boosting não achou?", "⚪", ""),
+ ("É possível prever eventos raros (≥17 acertos)?", "⚪", ""),
+ ("Alguma variável externa (calendário, lua, clima) tem sinal?", "⚪★", "teste barato"),
+ ("O modelo de popularidade (nº de ganhadores) calibra?", "🟡", "ordena, não calibra"),
+ ("A soma ou a paridade do próximo sorteio são previsíveis?", "✅", "não"),
+ ("Um meta-modelo escolhe a lente certa em cada janela?", "✅", "não (viés de seleção)"),
+ ("O histórico é compressível ou tem estrutura de baixa entropia?", "✅", "não"),
+ ("Algum subconjunto fixo de dezenas tem taxa diferente de 20%?", "⚪", "")]),
+("5. Cobertura e construção", [
+ ("Qual o teto teórico de E[max] com 10 jogos?", "⚪★", ""),
+ ("Qual o mínimo de acertos garantido do melhor jogo com N jogos (covering design)?", "⚪★", "2 jogos complementares garantem ≥10"),
+ ("Qual a sobreposição ótima entre jogos por objetivo (≥15, ≥17, ≥19)?", "🟡", "≈25–28"),
+ ("Quanto sobe P(≥15) por jogo adicional (retorno decrescente)?", "⚪★", ""),
+ ("Qual o nº de jogos de melhor razão benefício/custo?", "⚪★", ""),
+ ("O espelho (complemento) de um jogo ajuda para 0 e 20 acertos?", "🟡", "mesma probabilidade"),
+ ("Os 24 jogos atuais têm redundância desperdiçada?", "🟡", "auditoria"),
+ ("Hill-climbing sobre o histórico generaliza?", "✅", "não (82% some)"),
+ ("Hill-climbing sobre simulados melhora com mais amostra?", "🟡", "sim, até ~+0,17"),
+ ("A paridade do bilhete importa?", "✅", "não"),
+ ("A restrição de 2 por década custa algo?", "✅", "nada"),
+ ("Relógio com apoio otimizado vs jogo livre?", "✅", "igual (+0,166 vs +0,170)"),
+ ("Construção sequencial vs conjunta?", "✅", "conjunta é melhor"),
+ ("Estruturas matemáticas (códigos, designs, espaços finitos F₂⁷) cobrem melhor que hill-climbing?", "⚪★", "matemática avançada"),
+ ("Qual a melhor cobertura para o prêmio de 0 acertos?", "⚪", ""),
+ ("Qual construtor maximiza a cauda (≥17)?", "⚪", ""),
+ ("Quanto E[max] compra cada R$ 3 extras?", "⚪", ""),
+ ("A grade de 24 jogos está perto do teto de 19+?", "🟡", "a 0,00077% do teto")]),
+("6. Economia e risco", [
+ ("Retorno esperado por bilhete em função do acumulado?", "✅", "≈R$ 0,61 + 0,089/mi"),
+ ("A partir de qual acumulado o retorno iguala o preço?", "✅", "≈R$ 30 mi, nunca visto"),
+ ("Qual a chance de ganhar qualquer prêmio por concurso com 24 jogos?", "⚪★", ""),
+ ("Prêmio esperado e variância por faixa (15–19 e 0)?", "🟡", ""),
+ ("Quantos co-ganhadores esperar no 20 acertos?", "⚪", ""),
+ ("Bilhetes impopulares valem quanto?", "✅", "≈R$ 0,05/concurso"),
+ ("Probabilidade de perder X reais em N concursos (risco de ruína)?", "⚪★", "decisão de orçamento"),
+ ("Quantos concursos até 50% de chance de ver um 19+ com 24 jogos?", "⚪★", "≈10.000"),
+ ("Quanto tempo até 50% de chance de um 20 acertos com 24 jogos?", "⚪★", "≈330 mil concursos"),
+ ("O imposto sobre prêmios altera o retorno?", "⚪", ""),
+ ("Arrecadação por dia e mês: quando acumula mais?", "⚪", ""),
+ ("Há sazonalidade nos valores acumulados?", "⚪", ""),
+ ("Retorno real das nossas apostas vs esperado?", "🟡", "ledger ainda curto"),
+ ("Valor esperado de apostar só acima de R$ X mi?", "⚪★", ""),
+ ("Outra loteria (Lotofácil, Quina, Mega-Sena) tem melhor retorno por real?", "⚪★", "só se você pedir")]),
+("7. Rigor e decisões", [
+ ("Qual o poder do painel de predição? (viés injetado de 0,5, 1 e 2 pp)", "⚪★", ""),
+ ("O p do nosso protocolo é calibrado (falsos positivos na taxa nominal)?", "⚪★", ""),
+ ("Quantos sorteios para confirmar a coluna±10 (efeito 0,25 pp)?", "✅", "milhares"),
+ ("Quantos sorteios para distinguir dois grupos de jogos?", "✅", "≈170"),
+ ("O ledger por grupo já distingue algo?", "⚪", "n pequeno"),
+ ("O robô reproduz os números de referência após cada mudança (teste de regressão)?", "⚪★", ""),
+ ("Há divergências entre a planilha e a API (correções, duplicatas, datas)?", "🟡", "2.987/2.987 iguais"),
+ ("As conclusões mudam com a semente ou com o tamanho dos bancos?", "🟡", ""),
+ ("Que fração dos 'achados' o nosso auditor derruba?", "⚪", ""),
+ ("Qual critério para encerrar a busca por sinal se tudo continuar nulo?", "⚪★", "decisão"),
+ ("Qual orçamento você aceita perder, e que meta além do prêmio máximo faria sentido?", "⚪★", "decisão sua"),
+ ("Quais perguntas ainda não pensamos? (revisão periódica por mim e pelo auditor)", "⚪", ""),
+ ("Que dados novos poderíamos coletar (ordem, local, arrecadação) para testar mais?", "⚪", ""),
+ ("O que mudaria nossa conclusão? (qual evidência bastaria para virar a mesa)", "⚪★", "critério de refutação"),
+ ("Estamos medindo o que importa (acertos intermediários) ou o que o dinheiro paga?", "🟡", "cobertura ≠ retorno")]),
+]
+if __name__ == "__main__":
+    n = 0; cont = {"✅": 0, "🟡": 0, "⚪": 0}; est = 0; L = ["# As 100 perguntas do laboratório", "", "✅ respondida · 🟡 parcial · ⚪ aberta · ★ prioridade alta entre as abertas", ""]
+    for bloco, qs in B:
+        L += [f"## {bloco}", "", "| # | Pergunta | Status | Resposta / nota |", "|---|---|---|---|"]
+        for q, s, nota in qs:
+            n += 1; cont[s[0]] += 1; est += "★" in s; L.append(f"| {n} | {q} | {s} | {nota} |")
+        L.append("")
+    L.insert(4, f"**Total {n}: {cont['✅']} respondidas, {cont['🟡']} parciais, {cont['⚪']} abertas ({est} de prioridade alta).**"); L.insert(5, "")
+    open(os.path.join(RAIZ, "relatorios", "100_PERGUNTAS.md"), "w", encoding="utf-8").write("\n".join(L) + "\n")
+    print(L[4]); assert n == 100
