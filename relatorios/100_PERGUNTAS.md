@@ -2,7 +2,7 @@
 
 ✅ respondida · 🟡 parcial · ⚪ aberta · ★ prioridade alta entre as abertas
 
-**Total 100: 36 respondidas, 16 parciais, 48 abertas (23 de prioridade alta).**
+**Total 100: 39 respondidas, 17 parciais, 44 abertas (19 de prioridade alta).**
 
 ## 1. O globo é uniforme? (integridade)
 
@@ -17,7 +17,7 @@
 | 7 | Concursos especiais diferem dos comuns? | ⚪ |  |
 | 8 | Depois de concursos acumulados o sorteio muda? | ⚪ |  |
 | 9 | O volume de apostas (arrecadação) se relaciona com algo do sorteio? (não deveria) | ⚪ |  |
-| 10 | Qual a menor distorção que nossos testes conseguiriam detectar (poder estatístico)? | ⚪★ | pergunta-chave de honestidade |
+| 10 | Qual a menor distorção que nossos testes conseguiriam detectar (poder estatístico)? | ✅ | viés fixo ≥1,9 pp: 99%; repetição ≥0,85 pp: 100%; coluna ≥0,4 pp: 92%; o invisível vale ≤+0,05 acerto |
 
 ## 2. Memória temporal
 
@@ -81,7 +81,7 @@
 | # | Pergunta | Status | Resposta / nota |
 |---|---|---|---|
 | 53 | Qual o teto teórico de E[max] com 10 jogos? | ⚪★ |  |
-| 54 | Qual o mínimo de acertos garantido do melhor jogo com N jogos (covering design)? | ⚪★ | 2 jogos complementares garantem ≥10 |
+| 54 | Qual o mínimo de acertos garantido do melhor jogo com N jogos (covering design)? | ✅ | K10/R10 garantem ≥10; J ≥9; aleatório 6–7; garantir 15+ exige ≥88 jogos |
 | 55 | Qual a sobreposição ótima entre jogos por objetivo (≥15, ≥17, ≥19)? | 🟡 | ≈25–28 |
 | 56 | Quanto sobe P(≥15) por jogo adicional (retorno decrescente)? | ⚪★ |  |
 | 57 | Qual o nº de jogos de melhor razão benefício/custo? | ⚪★ |  |
@@ -123,9 +123,9 @@
 
 | # | Pergunta | Status | Resposta / nota |
 |---|---|---|---|
-| 86 | Qual o poder do painel de predição? (viés injetado de 0,5, 1 e 2 pp) | ⚪★ |  |
-| 87 | O p do nosso protocolo é calibrado (falsos positivos na taxa nominal)? | ⚪★ |  |
-| 88 | Quantos sorteios para confirmar a coluna±10 (efeito 0,25 pp)? | ✅ | milhares |
+| 86 | Qual o poder do painel de predição? (viés injetado de 0,5, 1 e 2 pp) | 🟡 | detectores simples medidos; falta o painel de ML completo |
+| 87 | O p do nosso protocolo é calibrado (falsos positivos na taxa nominal)? | ✅ | sem viés: 2,5–4% a p<0,05 |
+| 88 | Quantos sorteios para confirmar a coluna±10 (efeito 0,25 pp)? | ✅ | com 2.988 sorteios só 0,4 pp é detectado (59% a Bonferroni): milhares a mais |
 | 89 | Quantos sorteios para distinguir dois grupos de jogos? | ✅ | ≈170 |
 | 90 | O ledger por grupo já distingue algo? | ⚪ | n pequeno |
 | 91 | O robô reproduz os números de referência após cada mudança (teste de regressão)? | ⚪★ |  |

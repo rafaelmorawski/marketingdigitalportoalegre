@@ -13,7 +13,7 @@ B = [
  ("Concursos especiais diferem dos comuns?", "⚪", ""),
  ("Depois de concursos acumulados o sorteio muda?", "⚪", ""),
  ("O volume de apostas (arrecadação) se relaciona com algo do sorteio? (não deveria)", "⚪", ""),
- ("Qual a menor distorção que nossos testes conseguiriam detectar (poder estatístico)?", "⚪★", "pergunta-chave de honestidade")]),
+ ("Qual a menor distorção que nossos testes conseguiriam detectar (poder estatístico)?", "✅", "viés fixo ≥1,9 pp: 99%; repetição ≥0,85 pp: 100%; coluna ≥0,4 pp: 92%; o invisível vale ≤+0,05 acerto")]),
 ("2. Memória temporal", [
  ("O sorteio t depende de t−1 … t−10?", "✅", "não"),
  ("Existe dependência em lags longos (50, 100, 52 semanas)?", "⚪", ""),
@@ -61,7 +61,7 @@ B = [
  ("Algum subconjunto fixo de dezenas tem taxa diferente de 20%?", "⚪", "")]),
 ("5. Cobertura e construção", [
  ("Qual o teto teórico de E[max] com 10 jogos?", "⚪★", ""),
- ("Qual o mínimo de acertos garantido do melhor jogo com N jogos (covering design)?", "⚪★", "2 jogos complementares garantem ≥10"),
+ ("Qual o mínimo de acertos garantido do melhor jogo com N jogos (covering design)?", "✅", "K10/R10 garantem ≥10; J ≥9; aleatório 6–7; garantir 15+ exige ≥88 jogos"),
  ("Qual a sobreposição ótima entre jogos por objetivo (≥15, ≥17, ≥19)?", "🟡", "≈25–28"),
  ("Quanto sobe P(≥15) por jogo adicional (retorno decrescente)?", "⚪★", ""),
  ("Qual o nº de jogos de melhor razão benefício/custo?", "⚪★", ""),
@@ -95,9 +95,9 @@ B = [
  ("Valor esperado de apostar só acima de R$ X mi?", "⚪★", ""),
  ("Outra loteria (Lotofácil, Quina, Mega-Sena) tem melhor retorno por real?", "⚪★", "só se você pedir")]),
 ("7. Rigor e decisões", [
- ("Qual o poder do painel de predição? (viés injetado de 0,5, 1 e 2 pp)", "⚪★", ""),
- ("O p do nosso protocolo é calibrado (falsos positivos na taxa nominal)?", "⚪★", ""),
- ("Quantos sorteios para confirmar a coluna±10 (efeito 0,25 pp)?", "✅", "milhares"),
+ ("Qual o poder do painel de predição? (viés injetado de 0,5, 1 e 2 pp)", "🟡", "detectores simples medidos; falta o painel de ML completo"),
+ ("O p do nosso protocolo é calibrado (falsos positivos na taxa nominal)?", "✅", "sem viés: 2,5–4% a p<0,05"),
+ ("Quantos sorteios para confirmar a coluna±10 (efeito 0,25 pp)?", "✅", "com 2.988 sorteios só 0,4 pp é detectado (59% a Bonferroni): milhares a mais"),
  ("Quantos sorteios para distinguir dois grupos de jogos?", "✅", "≈170"),
  ("O ledger por grupo já distingue algo?", "⚪", "n pequeno"),
  ("O robô reproduz os números de referência após cada mudança (teste de regressão)?", "⚪★", ""),
